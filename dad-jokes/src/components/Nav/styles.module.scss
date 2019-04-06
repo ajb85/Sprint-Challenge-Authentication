@@ -1,0 +1,67 @@
+.navContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: 20px auto;
+  border-bottom: 1px solid black;
+  padding-bottom: 20px;
+}
+
+.linksContainer {
+  width: 33%;
+  min-width: 200px;
+  max-width: 500px;
+
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.active {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+  opacity: 0.5;
+  cursor: default;
+  border-bottom: 1px dotted black;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.disabled {
+  text-decoration: line-through;
+  color: black;
+  font-size: 1rem;
+  opacity: 0.5;
+  cursor: default;
+}
+
+.logout {
+  font-size: 1rem;
+  background-color: lighten(red, 20%);
+  transition: 0.25s;
+  border: 1px solid black;
+
+  &:hover {
+    background-color: darken(red, 20%);
+    color: white;
+  }
+}
+
+.whiteSpace {
+  width: 33%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
