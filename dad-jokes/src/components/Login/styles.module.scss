@@ -1,0 +1,32 @@
+.form {
+  font-size: 2.5rem;
+  //min-width: 400px;
+  max-width: 290px;
+  margin: auto;
+
+  label {
+    text-align: right;
+    width: 68px;
+  }
+  div {
+    padding: 10px;
+  }
+  p {
+    text-align: center;
+  }
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.error {
+  color: darken(red, 10%);
+  font-size: 1rem;
+}

@@ -1,14 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 import styles from "./styles.module.scss";
+import { Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className={styles.App}>
-        <p>Hello World</p>
-      </div>
-    );
-  }
+import Nav from "./components/Nav";
+import Login from "./components/Login";
+
+function App(props) {
+  return (
+    <div className={styles.App}>
+      <Route path="/" component={Nav} />
+      <Route path="/login" component={Login} />
+      <Route path="/register" component={HelloWorld} />
+    </div>
+  );
+}
+
+function HelloWorld() {
+  return <div>Hello World</div>;
 }
 
 export default App;
