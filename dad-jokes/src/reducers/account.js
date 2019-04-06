@@ -1,8 +1,8 @@
-import { LOGGING_IN, BAD_LOGIN, GOOD_LOGIN } from "actions/";
+import { LOGGING_IN, BAD_LOGIN, GOOD_LOGIN, LOGOUT } from "actions/";
 
 const initialState = {
   loggingIn: false,
-  username: "",
+  username: null,
   badLogin: false
 };
 
@@ -19,6 +19,8 @@ export default (state = initialState, action) => {
         badLogin: false,
         username: action.payload
       };
+    case LOGOUT:
+      return { ...state, username: null };
     default:
       return state;
   }

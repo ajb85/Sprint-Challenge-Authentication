@@ -5,6 +5,12 @@ export const LOGGING_IN = "LOGGING_IN";
 export const BAD_LOGIN = "BAD_LOGIN";
 export const GOOD_LOGIN = "GOOD_LOGIN";
 
+export const GETTING_JOKES = "GETTING_JOKES";
+export const BAD_GET = "BAD_GET";
+export const GOT_JOKES = "GOT_JOKES";
+
+export const LOGOUT = "LOGOUT";
+
 export const logUserIn = ({ username, password }) => dispatch => {
   console.log("login");
   dispatch({ type: LOGGING_IN });
@@ -27,10 +33,31 @@ export const createAccount = accountInfo => dispatch => {
   axios
     .post("/register", accountInfo)
     .then(res => {
-      logUserIn(accountInfo)(dispatch);
+      if (res.data.length) {
+        logUserIn(accountInfo)(dispatch);
+      } else {
+        dispatch({ type: BAD_LOGIN });
+      }
     })
     .catch(err => {
       console.log(err);
       dispatch({ type: BAD_LOGIN });
     });
+};
+
+export const fetchJokes = () => async dispatch => {
+  dispatch({ type: GETTING_JOKES });
+  try {
+    const list = await axios.get("/jokes");
+    dispatch({ type: GOT_JOKES, payload: list.data });
+  } catch (err) {
+    console.log(err);
+    dispatch({ type: BAD_GET });
+  }
+};
+
+export const logOut = () => dispatch => {
+  localStorage.removeItem("token");
+  dispatch({ type: LOGOUT });
+  dispatch(push("/login"));
 };

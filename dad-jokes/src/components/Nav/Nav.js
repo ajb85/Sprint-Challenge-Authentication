@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 
 import styles from "./styles.module.scss";
+import { logOut } from "actions/";
 
 function Nav(props) {
-  console.log(props.username);
   const liLinks = (
     <NavLink
       to="/jokes"
@@ -40,7 +40,13 @@ function Nav(props) {
       <section className={styles.linksContainer}>{links}</section>
       <section className={styles.whiteSpace}>
         {props.username ? (
-          <button type="button" className={styles.logout}>
+          <button
+            type="button"
+            className={styles.logout}
+            onClick={() => {
+              props.logOut();
+            }}
+          >
             Logout
           </button>
         ) : (
@@ -57,5 +63,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { logOut }
 )(Nav);

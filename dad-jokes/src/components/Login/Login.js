@@ -15,11 +15,15 @@ function Login(props) {
     },
     [props.badLogin]
   );
+
   const location = props.location.pathname.substring(1);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  useEffect(() => {
+    setErrorMessage("");
+  }, []);
   const handleSubmit = e => {
     e.preventDefault();
     if (username.length < 4 || password.length < 4) {
