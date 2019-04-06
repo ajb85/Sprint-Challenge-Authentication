@@ -11,6 +11,9 @@ import configureStore, { history } from "./configureStore";
 // Routes import
 import { ConnectedRouter } from "connected-react-router";
 
+// Axios interceptor
+import "./intercept.js";
+
 const store = configureStore();
 
 ReactDOM.render(

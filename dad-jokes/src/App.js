@@ -10,13 +10,9 @@ function App(props) {
     <div className={styles.App}>
       <Route path="/" component={Nav} />
       <Route path="/login" component={Login} />
-      <Route path="/register" component={HelloWorld} />
+      <Route path="/register" component={Login} />
     </div>
   );
-}
-
-function HelloWorld() {
-  return <div>Hello World</div>;
 }
 
 export default App;

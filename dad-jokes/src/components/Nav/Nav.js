@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 
 import styles from "./styles.module.scss";
 
-function Nav({ loggedIn }) {
-  const liLinks = [
+function Nav(props) {
+  console.log(props.username);
+  const liLinks = (
     <NavLink
       to="/jokes"
       className={styles.link}
@@ -13,30 +14,32 @@ function Nav({ loggedIn }) {
     >
       Home
     </NavLink>
-  ];
-  const loLinks = [
-    <NavLink
-      to="/register"
-      className={loggedIn ? styles.disabled : styles.link}
-      activeClassName={styles.active}
-    >
-      Create Account
-    </NavLink>,
-    <NavLink
-      to="/login"
-      className={loggedIn ? styles.disabled : styles.link}
-      activeClassName={styles.active}
-    >
-      Login
-    </NavLink>
-  ];
-  let links = loggedIn ? liLinks : loLinks;
+  );
+  const loLinks = (
+    <>
+      <NavLink
+        to="/register"
+        className={props.username ? styles.disabled : styles.link}
+        activeClassName={styles.active}
+      >
+        Create Account
+      </NavLink>
+      <NavLink
+        to="/login"
+        className={props.username ? styles.disabled : styles.link}
+        activeClassName={styles.active}
+      >
+        Login
+      </NavLink>
+    </>
+  );
+  let links = props.username ? liLinks : loLinks;
   return (
     <div className={styles.navContainer}>
       <section className={styles.whiteSpace} />
       <section className={styles.linksContainer}>{links}</section>
       <section className={styles.whiteSpace}>
-        {loggedIn ? (
+        {props.username ? (
           <button type="button" className={styles.logout}>
             Logout
           </button>
@@ -49,7 +52,7 @@ function Nav({ loggedIn }) {
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.account.loggedIn
+  username: state.account.username
 });
 
 export default connect(

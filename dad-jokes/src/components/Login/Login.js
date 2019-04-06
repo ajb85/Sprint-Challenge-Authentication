@@ -1,9 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 
 import styles from "./styles.module.scss";
-import authUser from "auth/requiresAuth.js";
+import { logUserIn, createAccount } from "actions/";
 
 function Login(props) {
+  useEffect(
+    () => {
+      if (props.badLogin) {
+        setErrorMessage(
+          "Whoops, something went wrong.  Account already made, wrong username/password?  Who knows, I'm entirely too lazy to put that kind of effort into this app!"
+        );
+      }
+    },
+    [props.badLogin]
+  );
   const location = props.location.pathname.substring(1);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,8 +22,18 @@ function Login(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    // Login
+    if (username.length < 4 || password.length < 4) {
+      setErrorMessage(
+        "Please give a username and password with at least 4 characters"
+      );
+    } else {
+      location === "login"
+        ? props.logUserIn({ username, password })
+        : props.createAccount({ username, password });
+      setErrorMessage("");
+    }
   };
+
   return (
     <form onSubmit={e => handleSubmit(e)} className={styles.form}>
       <div className={styles.inputContainer}>
@@ -26,7 +47,7 @@ function Login(props) {
       <div className={styles.inputContainer}>
         <label>Password:</label>
         <input
-          type="text"
+          type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
@@ -40,14 +61,36 @@ function Login(props) {
           onClick={() => {
             setUsername("");
             setPassword("");
+            setErrorMessage("");
           }}
         >
           Clear Form
         </button>
       </div>
+
+      <p>
+        {props.loggingIn ? (
+          <React.Fragment>
+            <i className="far fa-cog fa-spin" />
+            <br />
+            Getin dat login
+          </React.Fragment>
+        ) : (
+          ""
+        )}
+      </p>
+
       <p className={styles.error}>{errorMessage}</p>
     </form>
   );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  loggingIn: state.account.loggingIn,
+  badLogin: state.account.badLogin
+});
+
+export default connect(
+  mapStateToProps,
+  { logUserIn, createAccount }
+)(Login);

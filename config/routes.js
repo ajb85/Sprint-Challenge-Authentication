@@ -12,6 +12,7 @@ module.exports = server => {
 };
 
 async function register(req, res) {
+  console.log("register");
   try {
     const { username, password } = req.body;
     if (username && password) {
@@ -33,15 +34,14 @@ async function register(req, res) {
 }
 
 async function login(req, res) {
+  console.log("login");
   try {
     const { username, password } = req.body;
     const user = await Users.findBy({ username }).first();
     console.log(password, user);
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = getToken(user);
-      res
-        .status(200)
-        .json({ message: `You are now logged in as: ${user.username}`, token });
+      res.status(200).json({ username: user.username, token });
     } else {
       res.status(400).json({ message: "Incorrect username/password" });
     }
